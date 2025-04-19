@@ -2,19 +2,14 @@
 
 namespace App\Actions\Webshop;
 
+use App\Factories\CartFactory;
 use App\Models\Cart;
 
 class AddProductVariantToCart
 {
     public function add(int $variantId)
     {
-        $cart = match (auth()->guest()) {
-            true => Cart::firstOrCreate(['session_id' => session()->getId()]),
-            false => auth()->user()->cart ?: auth()->user()->cart()->create(),
-        };
-
-
-        $cart->items()->create([
+        CartFactory::make()->items()->create([
             'product_variant_id' => $variantId,
             'quantity' => 1,
         ]);

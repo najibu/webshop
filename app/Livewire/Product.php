@@ -30,6 +30,8 @@ class Product extends Component
         $cart->add(variantId: $this->variant);
 
         $this->banner('Your product has been added to your cart');
+
+        $this->dispatch('productAddedToCart');
     }
 
     public function getProductProperty()
