@@ -15,7 +15,7 @@ class AddProductVariantToCart
 
 
         $cart->items()->create([
-            'variant_id' => $variantId,
+            'product_variant_id' => $variantId,
             'quantity' => 1,
         ]);
     }
