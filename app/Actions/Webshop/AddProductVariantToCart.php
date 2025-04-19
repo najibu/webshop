@@ -8,16 +8,15 @@ class AddProductVariantToCart
 {
     public function add(int $variantId)
     {
-        if (auth()->guest()) {
-            $cart = Cart::firstOrCreate([
-                'session_id' => session()->getId(),
-            ]);
-        }
+        $cart = match (auth()->guest()) {
+            true => Cart::firstOrCreate(['session_id' => session()->getId()]),
+            false => auth()->user()->cart ?: auth()->user()->cart()->create(),
+        };
 
-        if (auth()->user()) {
-            $cart = auth()->user()->cart ?: auth()->user()->cart()->create();
-        }
 
-        dd($cart);
+        $cart->items()->create([
+            'variant_id' => $variantId,
+            'quantity' => 1,
+        ]);
     }
 }
