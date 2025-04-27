@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Actions\Webshop\CreateStripeCheckoutSession;
 use App\Factories\CartFactory;
 use Livewire\Component;
 
@@ -10,6 +11,11 @@ class Cart extends Component
     public function getCartProperty()
     {
         return CartFactory::make()->loadMissing(['items', 'items.product', 'items.variant']);
+    }
+
+    public function checkout(CreateStripeCheckoutSession $checkoutSession)
+    {
+        return $checkoutSession->createFromCart($this->cart);
     }
 
     public function getItemsProperty()
