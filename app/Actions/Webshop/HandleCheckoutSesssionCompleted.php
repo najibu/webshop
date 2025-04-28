@@ -7,7 +7,9 @@ use App\Models\User;
 use Stripe\LineItem;
 use App\Models\OrderItem;
 use Laravel\Cashier\Cashier;
+use App\Mail\OrderConfirmation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class HandleCheckoutSesssionCompleted
 {
@@ -67,6 +69,8 @@ class HandleCheckoutSesssionCompleted
 
             $cart->items()->delete();
             $cart->delete();
+
+            Mail::to($user)->send(new OrderConfirmation($order));
         });
     }
 }
