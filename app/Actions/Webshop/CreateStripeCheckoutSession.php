@@ -25,6 +25,7 @@ class CreateStripeCheckoutSession
                     ],
                     'metadata' => [
                         'user_id' => $cart->user->id,
+                        'cart_id' => $cart->id,
                     ]
                 ]
             );
